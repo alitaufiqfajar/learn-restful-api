@@ -24,3 +24,12 @@ exports.deleteSuccess = function(values, res){
     res.json(data);
     res.end
 };
+
+exports.editSuccess = function(values, res){
+    var data = {
+        'status' : 200,
+        'message' : 'edit user success!'
+    };
+    res.json(data);
+    res.end
+};

@@ -24,11 +24,11 @@ router.get('/:id', function (req, res) {
     });
 });
 
-router.post('/addUser', function(req, res){
-    console.log(req.body);
-    var value = [req.body.first_name, req.body.last_name]
-    sql.query(query.addUser, [value], function(err, rows, fields){
-        if(err){
+router.post('/addUser', function (req, res) {
+    const value = Object.keys(req.body).map(key => req.body[key]);
+    console.log(value)
+    sql.query(query.addUser, [value], function (err, rows, fields) {
+        if (err) {
             console.log(err);
         } else {
             response.addSuccess(rows, res);
@@ -44,6 +44,21 @@ router.delete('/deleteUser/:id', function (req, res) {
             response.deleteSuccess(rows, res);
         }
     });
+});
+
+router.put('/editUser/:id', function (req, res) {
+    const id = req.params.id;
+    const value = Object.keys(req.body).map(key => req.body[key]);
+    value.push(id);
+
+    sql.query(query.editUser, value, function (err, rows, fields) {
+        if (err) {
+            console.log(err);
+        } else {
+            response.editSuccess(rows, res);
+        }
+    });
+    console.log(value);
 });
 
 module.exports = router;
