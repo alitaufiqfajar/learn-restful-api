@@ -25,8 +25,8 @@ router.get('/:id', function (req, res) {
 });
 
 router.post('/addUser', function (req, res) {
-    const value = Object.keys(req.body).map(key => req.body[key]);
-    console.log(value)
+    const value = [req.body.first_name, req.body.last_name, req.body.phone, req.body.email, req.body.address];
+    
     sql.query(query.addUser, [value], function (err, rows, fields) {
         if (err) {
             console.log(err);
@@ -46,10 +46,8 @@ router.delete('/deleteUser/:id', function (req, res) {
     });
 });
 
-router.put('/editUser/:id', function (req, res) {
-    const id = req.params.id;
-    const value = Object.keys(req.body).map(key => req.body[key]);
-    value.push(id);
+router.put('/editUser', function (req, res) {
+    const value = [req.body.first_name, req.body.last_name, req.body.phone, req.body.email, req.body.address, req.body.id];
 
     sql.query(query.editUser, value, function (err, rows, fields) {
         if (err) {
